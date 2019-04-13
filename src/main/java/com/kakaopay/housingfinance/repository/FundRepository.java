@@ -12,7 +12,6 @@ import java.util.Map;
 public interface FundRepository extends JpaRepository<Fund, Long> {
 
     /**
-     *
      * @param year
      * @return
      */
@@ -33,36 +32,5 @@ public interface FundRepository extends JpaRepository<Fund, Long> {
             "       WHERE 1=1 AND (RESULT.min_row = 1 OR RESULT.max_row = 1)"
             , nativeQuery = true)
     List<Map<String,Object>> getFirstSearchYearMaxMonth(Integer year);
-
-    /**
-     * 예측에 필요한 데이터 조회
-     * @param institute_code : 조회할 기관 코드
-     * @param analysisYear : 예측 조회할 연도
-     * @param analysisMonth : 예측 조회할 월 (단. 기존 데이터가 있는 년월를 조회할 경우 해당 년월 미만 까지만 조회)
-     * @return
-     */
-    @Query(value ="SELECT RESULT.amount" +
-            "   FROM (" +
-            "       SELECT" +
-            "               sta.year as year" +
-            "               , sta.month as month " +
-            "               , sta.amount as amount" +
-            "       FROM Fund as sta" +
-            "       WHERE sta.institute_code = :institute_code" +
-            "           AND sta.year < :analysisYear " +
-            "   UNION ALL" +
-            "       SELECT" +
-            "               sta.year as year" +
-            "               , sta.month as month " +
-            "               , sta.amount as amount" +
-            "       FROM Fund as sta" +
-            "       WHERE sta.institute_code = :institute_code" +
-            "           AND sta.year = :analysisYear " +
-            "           AND sta.month < :analysisMonth " +
-            "   ) as RESULT" +
-            "   ORDER BY RESULT.year asc, RESULT.month asc "
-            , nativeQuery = true)
-    double[] getAllAmountStatsMonthPrediction(@Param("institute_code") String institute_code, @Param("analysisYear") Integer analysisYear, @Param("analysisMonth") Integer analysisMonth);
-
 
 }

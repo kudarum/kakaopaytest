@@ -18,7 +18,7 @@ public class InstituteService {
      * 코트로 주택 공급기관 조회시 코드 오름차순 정렬
      * @return
      */
-    public List<Institute> findAllOrderByCodeAsc() {
+    public List<Institute> getInstituteAllList() {
         Sort sort = new Sort(Sort.Direction.ASC,"code");
         return instituteRepository.findAll(sort);
     }

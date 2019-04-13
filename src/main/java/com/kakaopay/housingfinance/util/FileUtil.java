@@ -1,8 +1,9 @@
 package com.kakaopay.housingfinance.util;
 
-import com.kakaopay.housingfinance.common.exception.ApiExceptionMessage;
-import com.kakaopay.housingfinance.common.exception.handler.ApiExceptionHandler;
+import com.kakaopay.housingfinance.common.response.ApiResponseMessage;
+import com.kakaopay.housingfinance.model.dto.FundYearAvgDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +22,7 @@ import java.util.List;
  * 파일 업로드 Util
  */
 @RestController
-@RequestMapping(value = "/file", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping(value = "/files", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class FileUtil {
 
     @Autowired
@@ -34,13 +35,15 @@ public class FileUtil {
      * @return
      * @throws Exception
      */
-    @PostMapping("/institute/fundCsvRead")
+    @PostMapping("/fundCsvRead")
     public ResponseEntity instituteFundCsvRead(MultipartHttpServletRequest multipartHttpServletRequest
             , @RequestParam(value = "file", required = false) MultipartFile multipartFile) throws Exception {
 
+        String result = "";
+
         // 업로드 파일이 없는 경우.
         if(multipartFile == null) {
-            throw new FileNotFoundException(ApiExceptionMessage.FILE_NOT_FOUND_EXCEPTION.getMessage());
+            throw new FileNotFoundException(ApiResponseMessage.ERROR_FILE_NOT_FOUND.getMessage());
         }
 
         Iterator<String> itr = multipartHttpServletRequest.getFileNames();
@@ -48,11 +51,9 @@ public class FileUtil {
 
         if(itr.hasNext()){
             multipartFiles.add(multipartHttpServletRequest.getFile(itr.next()));
-            csvUtil.instituteFundCsvRead(multipartFile);
+            result = csvUtil.instituteFundCsvRead(multipartFile);
         }
 
-
-
-        return ResponseEntity.ok("");
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 }

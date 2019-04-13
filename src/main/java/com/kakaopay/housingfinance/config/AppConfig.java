@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -47,21 +48,26 @@ public class AppConfig {
         return new ApplicationRunner() {
 
             @Autowired
+            MessageSource messageSource;
+
+
+            @Autowired
             InstituteRepository instituteRepository;
 
             @Override
             public void run(ApplicationArguments args) throws Exception {
-                List<Institute> instituteList = new ArrayList<>();
-                String[] instituteArray = {"주택도시기금", "국민은행", "우리은행", "신한은행", "한국시티은행", "하나은행", "농협은행/수협은행", "외환은행", "기타은행"};
-                int codeCount = 1;
 
-                for(String instituteName : instituteArray){
+                List<Institute> instituteList = new ArrayList<>();
+                String[] institute_array = {"주택도시기금", "국민은행", "우리은행", "신한은행", "한국시티은행", "하나은행", "농협은행/수협은행", "외환은행", "기타은행"};
+                int code_count = 1;
+
+                for(String institute_name : institute_array){
                     Institute institute = Institute.builder()
-                            .name(instituteName)
-                            .code("bank00"+codeCount)
+                            .name(institute_name)
+                            .code("bank00"+code_count)
                             .build();
                     instituteList.add(institute);
-                    codeCount++;
+                    code_count++;
                 }
 
                 instituteRepository.saveAll(instituteList);

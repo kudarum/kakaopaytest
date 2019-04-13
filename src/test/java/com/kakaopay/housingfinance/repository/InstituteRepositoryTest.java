@@ -1,5 +1,6 @@
 package com.kakaopay.housingfinance.repository;
 
+import com.kakaopay.housingfinance.cmm.TestDescription;
 import com.kakaopay.housingfinance.model.Institute;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,11 +19,13 @@ public class InstituteRepositoryTest {
     @Autowired
     InstituteRepository instituteRepository;
 
-    // applicationRunner 동작 시 기관이 재대로 생성되었는지 테스트
     @Test
+    @TestDescription("applicationRunner 동작 시 기관이 재대로 생성되었는지 테스트")
     public void createdInstitute(){
+
         List<Institute> instituteList = instituteRepository.findAll();
 
+        // 조회한 목록이 존재하는지 체크
         assertThat(instituteList).isEmpty();
 
     }

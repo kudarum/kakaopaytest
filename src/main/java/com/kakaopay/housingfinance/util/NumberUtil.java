@@ -12,19 +12,12 @@ public class NumberUtil {
      * @param number
      * @return
      */
-    public Long removeFormatNumberLong(String number){
-        if(number.isEmpty()) {
-            return null;
-        }
-
+    public Long removeFormatNumberLong(String number) {
         try {
             return Long.parseLong(number.replaceAll(",",""));
-
         } catch (Exception e) {
-
+            throw e;
         }
-        return null;
-
     }
 
     /**
@@ -32,7 +25,11 @@ public class NumberUtil {
      * @param number
      * @return
      */
-    public String appendFormatNumberLong(Long number){
-        return new DecimalFormat("#,###").format(number);
+    public String appendFormatNumberLong(Long number) {
+        try {
+            return new DecimalFormat("#,###").format(number);
+        } catch (Exception e) {
+            throw e;
+        }
     }
 }

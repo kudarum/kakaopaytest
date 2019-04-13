@@ -44,7 +44,12 @@ import javax.validation.constraints.NotEmpty;
 })
 
 @Entity
-@Table(name = "FUND")
+@Table(name = "FUND"
+        ,uniqueConstraints = @UniqueConstraint(columnNames = {"year","month","institute_code"})
+        ,indexes = {
+        @Index(name = "IDX_FUND_01", unique = false, columnList = "year,month")
+        , @Index(name = "IDX_FUND_02", unique = true, columnList = "year,month,institute_code")
+})
 @Getter @Setter
 @Builder @NoArgsConstructor @AllArgsConstructor
 public class Fund {

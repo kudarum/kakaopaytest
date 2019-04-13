@@ -55,7 +55,13 @@ public class FundStatsRepository {
                 ,"FundYearSumMaxMapping"
         );
 
-        return (FundYearSumMaxDto)nativeQuery.getSingleResult();
+        // 결과가 없는 경우도 존재함.
+        List<FundYearSumMaxDto> resultList = nativeQuery.getResultList();
+        if(resultList == null || resultList.size() == 0) {
+            return null;
+        } else {
+            return resultList.get(0);
+        }
     }
 
     // amount의 경우 자동으로 반올림 처리 됨.

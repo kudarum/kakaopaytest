@@ -1,12 +1,14 @@
 package com.kakaopay.housingfinance.util;
 
-import com.kakaopay.housingfinance.model.Institute;
+import com.kakaopay.housingfinance.common.response.ApiResponseMessage;
 import com.kakaopay.housingfinance.model.Fund;
-import com.kakaopay.housingfinance.repository.InstituteRepository;
+import com.kakaopay.housingfinance.model.Institute;
 import com.kakaopay.housingfinance.repository.FundRepository;
+import com.kakaopay.housingfinance.repository.InstituteRepository;
 import com.opencsv.CSVReader;
+import javassist.NotFoundException;
+import org.hibernate.JDBCException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,10 +39,10 @@ public class CsvUtil {
      * @return
      */
     @Transactional
-    public ResponseEntity instituteFundCsvRead(MultipartFile multipartFile) {
+    public String instituteFundCsvRead(MultipartFile multipartFile) throws Exception {
 
-        if (multipartFile.isEmpty()) {
-
+        if(multipartFile == null || multipartFile.isEmpty()) {
+            throw new NotFoundException(ApiResponseMessage.ERROR_FILE_NOT_FOUND.getMessage());
         }
 
         try {
@@ -49,15 +51,16 @@ public class CsvUtil {
             AtomicInteger row = new AtomicInteger(0);
             List<String> instituteCodeFilterList = new ArrayList<>();
             List<Fund> fundList = new ArrayList<>();
-
+            // 주택금융 기관 조회
             List<Institute> instituteList = instituteRepository.findAll();
 
+            // csv파일 데이터 읽기
             elements.forEach(cellDataArray -> {
 
                 // 첫번째 라인은 컬럼이기 때문에 기관코드와 컬럼 명과 맴핑
                 if(row.get() == 0) {
 
-                    // 기관 항목 순서 정리
+                    // 주택금융 기관 항목 순서 정리
                     for(int cellCount = 2; cellCount < cellDataArray.length; cellCount++) {
                         String instituteName = cellDataArray[cellCount];
                         instituteCodeFilterList.add(getInstitureCodeFilterName(instituteList, instituteName));
@@ -95,10 +98,12 @@ public class CsvUtil {
             fundRepository.saveAll(fundList);
 
         } catch (IOException e) {
-
+            throw new Exception(ApiResponseMessage.ERROR_FILE_PROCESS_FAIL.getMessage());
+        } catch (Exception e) {
+            throw e;
         }
 
-        return ResponseEntity.ok("");
+        return ApiResponseMessage.RESPONSE_SUCCESS.getMessage();
     }
 
     /**
@@ -117,9 +122,8 @@ public class CsvUtil {
                     .orElseThrow(NullPointerException::new)
                     .getCode();
         } catch (Exception e) {
+            throw e;
         }
-
-        return null;
 
     }
 }

@@ -9,9 +9,15 @@ import javax.validation.constraints.NotEmpty;
 
 /**
  * 금융 기관 Entity
+ *
  */
 @Entity
-@Table(name = "INSTITUTE")
+@Table(name = "INSTITUTE"
+    , uniqueConstraints = @UniqueConstraint(columnNames = {"institute_code"})
+    ,indexes = {
+        @Index(name = "IDX_INSTITUTE_01", unique = true, columnList = "institute_code")
+        , @Index(name = "IDX_INSTITUTE_02", unique = false, columnList = "institute_name")
+    })
 @Getter @Setter
 @Builder @NoArgsConstructor @AllArgsConstructor
 public class Institute {
