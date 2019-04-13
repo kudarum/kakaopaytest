@@ -47,8 +47,8 @@ public class InstituteControllerTest extends BaseTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(header().string(HttpHeaders.CONTENT_TYPE,MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("status").value(ApiResponseMessage.RESPONSE_SUCCESS_CODE.getMessage()))
-                .andExpect(jsonPath("message").value(ApiResponseMessage.RESPONSE_SUCCESS.getMessage()))
+                .andExpect(jsonPath("code").value(200))
+                .andExpect(jsonPath("message").exists())
                 .andExpect(jsonPath("result").exists())
                 .andExpect(jsonPath("result[0].name").exists())
                 .andExpect(jsonPath("result[0].code").exists());

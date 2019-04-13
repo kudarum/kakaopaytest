@@ -1,11 +1,10 @@
 package com.kakaopay.housingfinance.util;
 
-import com.github.signaflo.timeseries.TimeSeries;
-import com.github.signaflo.timeseries.Ts;
-import com.github.signaflo.timeseries.forecast.Forecast;
-import com.github.signaflo.timeseries.model.arima.Arima;
-import com.github.signaflo.timeseries.model.arima.ArimaOrder;
+
 import com.kakaopay.housingfinance.common.response.ApiResponseMessage;
+import com.workday.insights.timeseries.arima.Arima;
+import com.workday.insights.timeseries.arima.struct.ArimaParams;
+import com.workday.insights.timeseries.arima.struct.ForecastResult;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -19,54 +18,47 @@ public class PredictionUtil {
     public Double analysisArima(double[] arimaDataArray, Integer analysis_year, Integer analysis_month, Integer start_year, Integer start_month, Integer end_year, Integer end_month) throws Exception {
 
         try {
-            // validation check
-            String check_result = arimaValidate(arimaDataArray, analysis_year, start_year, start_month, end_year, end_month);
 
-            Integer search_fix_month;
+            if(arimaDataArray != null && arimaDataArray.length > 6) {
 
-            if(check_result.isEmpty()) {
+                int forecastSize = 1;
 
                 //분석할 Size 구하기
-                if(analysis_year <= end_year) {
+                if(analysis_year < end_year || (analysis_year.equals(end_year) && analysis_month <= end_month)) {
                     // 검색 연도가 데이터의 최대 일자보다 작거나 같은 경우 => 이미 데이터가 존재 하는 경우
-                    search_fix_month = analysis_month + 1;
+                    forecastSize = 1;
+                } else if(analysis_year.equals(end_year) && analysis_month > end_month) {
+                    forecastSize = analysis_month - end_month;
                 } else {
                     // 검색 연도가 데이터의 최대 일자보다 큰경우 => 데이터가 없는 경우
-                    search_fix_month = (12 - end_month) + analysis_month;
+                    forecastSize = (12 - end_month) + analysis_month;
                 }
 
-                TimeSeries timeSeries = Ts.newMonthlySeries(start_year, start_month, arimaDataArray);
+                // Set ARIMA model parameters.
+                // Setting ARIMA(1,0,1) which work as a combination of AR and MA models
+                int p = 1;
+                int d = 0;
+                int q = 1;
 
-                ArimaOrder modelOrder = ArimaOrder.order(2, 0, 1, 1, 1, 1);
+                int P = 1;
+                int D = 1;
+                int Q = 0;
+                int m = 0;
 
-                com.github.signaflo.timeseries.model.arima.Arima model = Arima.model(timeSeries, modelOrder);
+                // setting the forecast size.
+                ArimaParams arimaParams = new ArimaParams(p, d, q, P, D, Q, m);
 
-                log.debug("ARIMA AIC : " + model.aic()); // Get and display the model AIC
+                ForecastResult forecastResult = Arima.forecast_arima(arimaDataArray, forecastSize, arimaParams);
 
-                Forecast forecast = model.forecast(search_fix_month); // To specify the alpha significance level, add it as a second argument.
+                double[] forecast = forecastResult.getForecast();
 
-                List<Double> forecastList = forecast.pointEstimates().asList();
-
-                return forecastList.get(forecastList.size()-1);
+                return forecast[forecast.length-1];
             } else {
-                throw new Exception(check_result);
+                return null;
             }
+
         } catch (Exception e) {
             throw e;
         }
     }
-
-    private String arimaValidate(double[] arimaDataArray, Integer analysis_year, Integer start_year, Integer start_month, Integer end_year, Integer end_month) {
-
-        String check_result = "";
-
-        if((arimaDataArray == null || arimaDataArray.length == 0) || start_year == null || start_month == null || end_year == null
-        || end_month == null || analysis_year < start_year || analysis_year > end_year+1) {
-            check_result = ApiResponseMessage.ERROR_RUN_TIME_EXCEPTION.getMessage();
-        }
-
-        return check_result;
-
-    }
-
 }

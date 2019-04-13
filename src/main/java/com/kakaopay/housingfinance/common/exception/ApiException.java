@@ -32,6 +32,8 @@ public class ApiException {
                 .body(new ApiResponseBody(HttpStatus.BAD_REQUEST,e.getMessage()));
     }
 
+
+
     @ExceptionHandler(value = {NotFoundException.class, NoHandlerFoundException.class})
     @ResponseStatus(code = HttpStatus.NOT_FOUND)
     public ResponseEntity notFoundUrl(NotFoundException e) {

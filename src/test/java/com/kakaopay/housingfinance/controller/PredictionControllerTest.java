@@ -2,13 +2,11 @@ package com.kakaopay.housingfinance.controller;
 
 import com.kakaopay.housingfinance.cmm.BaseTest;
 import com.kakaopay.housingfinance.cmm.TestDescription;
-import com.kakaopay.housingfinance.common.response.ApiResponseMessage;
 import com.kakaopay.housingfinance.model.dto.PredictionDto;
 import com.kakaopay.housingfinance.repository.PredictionRepository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -46,8 +44,8 @@ public class PredictionControllerTest extends BaseTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(header().string(HttpHeaders.CONTENT_TYPE,MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("status").value(ApiResponseMessage.RESPONSE_SUCCESS_CODE.getMessage()))
-                .andExpect(jsonPath("message").value(ApiResponseMessage.RESPONSE_SUCCESS.getMessage()))
+                .andExpect(jsonPath("code").value(200))
+                .andExpect(jsonPath("message").exists())
                 .andExpect(jsonPath("result").exists())
                 .andExpect(jsonPath("result.bank").exists())
                 .andExpect(jsonPath("result.year").exists())
@@ -80,13 +78,47 @@ public class PredictionControllerTest extends BaseTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(header().string(HttpHeaders.CONTENT_TYPE,MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("status").value(ApiResponseMessage.RESPONSE_SUCCESS_CODE.getMessage()))
-                .andExpect(jsonPath("message").value(ApiResponseMessage.RESPONSE_SUCCESS.getMessage()))
+                .andExpect(jsonPath("code").value(200))
+                .andExpect(jsonPath("message").exists())
                 .andExpect(jsonPath("result").exists())
                 .andExpect(jsonPath("result.bank").exists())
                 .andExpect(jsonPath("result.year").exists())
                 .andExpect(jsonPath("result.month").exists())
                 .andExpect(jsonPath("result.amount").exists());
+    }
+
+    @Test
+    @TestDescription("6개월 이하 데이터 조회후 예측시 오류 발생 - 특정 은행의 특정 달에 대해서 검색 년도 해당 달에 금융지원 금액을 예측")
+    public void test_GetPredictionFundMonth_LackData() throws Exception{
+
+        // 데이터 모두 삭제
+        fundDataDelete();
+
+        // 입력된 데이터가 없을 떄.
+        // 초기 데이터 생성후
+        fundDataInsert();
+
+        PredictionDto predictionDto = PredictionDto.builder()
+                .bank("국민은행")
+                .year(2005)
+                .month(6)
+                .build();
+
+        // 리스트 조회후 정상적으로 데이터가 리턴 되는지 체크
+        mockMvc.perform(get("/predictions/fund/month")
+                .contentType(MediaType.APPLICATION_JSON_UTF8) // 요청에 JSON 담아 보낼께
+                .accept(MediaType.APPLICATION_JSON_UTF8)
+                .content(objectMapper.writeValueAsString(predictionDto))
+        ) // 나느 JSON 형태로 응답 받기를 원한다. 요구함.
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(header().string(HttpHeaders.CONTENT_TYPE,MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(jsonPath("code").value(999)) // 커스텀 코드
+                .andExpect(jsonPath("message").exists())
+                .andExpect(jsonPath("result").exists())
+                .andExpect(jsonPath("result.bank").exists())
+                .andExpect(jsonPath("result.year").exists())
+                .andExpect(jsonPath("result.month").exists());
     }
 
     @Test
@@ -111,9 +143,8 @@ public class PredictionControllerTest extends BaseTest {
                 .andDo(print())
                 .andExpect(status().isBadRequest()) // 오류가 나길 바란다.
                 .andExpect(header().string(HttpHeaders.CONTENT_TYPE,MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("status").value(ApiResponseMessage.RESPONSE_FAIL_CODE.getMessage()))
-                .andExpect(jsonPath("message").value(ApiResponseMessage.RESPONSE_FAIL.getMessage()))
-                .andExpect(jsonPath("errorCode").value(HttpStatus.BAD_REQUEST.value()));
+                .andExpect(jsonPath("code").value(400))
+                .andExpect(jsonPath("message").exists());
     }
 
 }

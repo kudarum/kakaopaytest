@@ -1,5 +1,6 @@
 package com.kakaopay.housingfinance.util;
 
+import com.kakaopay.housingfinance.common.response.ApiResponseBody;
 import com.kakaopay.housingfinance.common.response.ApiResponseMessage;
 import com.kakaopay.housingfinance.model.dto.FundYearAvgDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,6 @@ public class FileUtil {
             result = csvUtil.instituteFundCsvRead(multipartFile);
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(result);
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseBody<>(HttpStatus.OK,ApiResponseMessage.RESPONSE_SUCCESS_FILE.getMessage(),null));
     }
 }

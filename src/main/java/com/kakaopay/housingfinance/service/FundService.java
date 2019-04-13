@@ -38,7 +38,7 @@ public class FundService {
         List<FundYearSumDto> fundYearSumDtoList = fundStatsRepository.findAllFundYearSum();
 
         return FundStatsDto.builder()
-                .name("주택금융 공급현황")
+                .name(ApiResponseMessage.RESPONSE_TITLE_YEAR_SUM.getMessage())
                 .resultList(fundYearSumDtoList)
                 .build();
     }
@@ -51,17 +51,19 @@ public class FundService {
     // 전체 년도에서 외환은행의 지원금액 평균 중에서 가장 작은 금액과 큰 금액 조회
     public FundYearAvgDto getFundStatsYearAvgMinMax(String institute_code) {
 
+        String bank = "";
+
         Optional<Institute> optionalInstitute = instituteRepository.findByCode(institute_code);
 
         // null이라면. optionalInstitute.isPresent() null이 아닐 때 => 그것의 반대이니 null인경우
-        if(!optionalInstitute.isPresent()){
-            throw new NullPointerException(ApiResponseMessage.ERROR_EMPTY_DATA.getMessage());
+        if(optionalInstitute.isPresent()){
+            bank = optionalInstitute.get().getName();
         }
 
         List<FundYearAvgMinMaxDto> fundYearAvgMinMaxDtoList = fundStatsRepository.findAllFundYearAvgMinMaxDtoList(institute_code);
 
         return FundYearAvgDto.builder()
-                .bank(optionalInstitute.get().getName())
+                .bank(bank)
                 .support_amount(fundYearAvgMinMaxDtoList)
                 .build();
     }

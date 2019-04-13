@@ -39,7 +39,7 @@ public class PredictionService {
         Optional<Institute> optionalInstitute = instituteRepository.findByName(predictionFundDto.getBank());
 
         if(!optionalInstitute.isPresent()){
-            throw new NullPointerException(ApiResponseMessage.ERROR_EMPTY_DATA.getMessage());
+            throw new NullPointerException(ApiResponseMessage.ERROR_PREDICTION_FAIL.getMessage());
         }
 
         String institute_code = optionalInstitute.get().getCode();
@@ -51,7 +51,7 @@ public class PredictionService {
 
         if(minMaxYearMonth == null || minMaxYearMonth.size() == 0) {
             // return null 오류
-            throw new NullPointerException(ApiResponseMessage.ERROR_EMPTY_DATA.getMessage());
+            throw new NullPointerException(ApiResponseMessage.ERROR_PREDICTION_FAIL.getMessage());
         }
 
         Integer start_year = (Integer) minMaxYearMonth.get(0).get("year");
@@ -59,7 +59,7 @@ public class PredictionService {
         Integer end_year = (Integer) minMaxYearMonth.get(1).get("year");
         Integer end_month = (Integer) minMaxYearMonth.get(1).get("month");
 
-        // 조회 연도가 없는 경우.
+        // 조회 연도가 없는 경우. 조회 데이터의 마지막 연도 +1 한 연도의 데이터 예측
         if(analysis_year == null){
             analysis_year = end_year + 1;
         }
@@ -70,17 +70,20 @@ public class PredictionService {
         // ARIMA 시계열 예측 사용
         Double resultData = predictionUtil.analysisArima(fundDataArray, analysis_year, analysis_month, start_year, start_month, end_year, end_month);
 
-        if(resultData == null) {
-            // 분석 실패
-            throw new NullPointerException(ApiResponseMessage.RESPONSE_FAIL.getMessage());
+        if(resultData != null) {
+            return PredictionDto.builder()
+                    .bank(institute_code)
+                    .year(analysis_year)
+                    .amount(Math.round(resultData))
+                    .month(predictionFundDto.getMonth())
+                    .build();
         }
 
         return PredictionDto.builder()
-                .bank(institute_code)
-                .year(analysis_year)
-                .amount(Math.round(resultData))
-                .month(predictionFundDto.getMonth())
-                .build();
+            .bank(institute_code)
+            .year(analysis_year)
+            .month(predictionFundDto.getMonth())
+            .build();
 
     }
 }
