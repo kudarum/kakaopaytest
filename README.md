@@ -45,6 +45,67 @@ java -jar ${ProjectPath}/target/housingfinance-0.0.1-SNAPSHOT.jar
   * @RestControllerAdvice 활용하여 요청에 대한 오류를 자동으로 핸들링
 
 ### API 명세서
+#### 회원가입 API
+>POST
+http:{IP}:8080/accounts/save
+~~~
+Header
+Content-Type: application/json
+Authorization : "Bearer {jwttoken}"
+
+Request
+{
+	"username":"test002",
+	"password":"test002"
+}
+
+Response
+{
+    "code": 200,
+    "message": "정상 처리되었습니다.",
+    "result": {token 값 생성됨.}
+}
+~~~
+
+#### 로그인 API
+>POST
+http:{IP}:8080/accounts/token
+~~~
+Header
+Content-Type: application/json
+Authorization : "Bearer {jwttoken}"
+
+Request
+{
+	"username":"test002",
+	"password":"test002"
+}
+
+Response
+{
+    "code": 200,
+    "message": "정상 처리되었습니다.",
+    "result": {token 값 생성됨.}
+}
+~~~
+
+#### 토큰 재발급 API
+>GET
+http:{IP}:8080/accounts/token
+~~~
+Header
+Content-Type: application/json
+Authorization : "Bearer {jwttoken}"
+
+Request
+
+Response
+{
+    "code": 200,
+    "message": "정상 처리되었습니다.",
+    "result": {token 값 생성됨.}
+}
+~~~
 #### 데이터 파일에서 각 레코드를 데이터베이스에 저장하는 API 개발.
 >POST
 http:{IP}:8080/files/fundCsvRead
@@ -54,7 +115,7 @@ Content-Type: multipart/form-data
 
 Request
 {
-	
+	"file" : file
 }
 ~~~
 #### 주택금융 공급 금융기관(은행) 목록을 출력하는 API
@@ -229,67 +290,5 @@ Response
         "month": 2,
         "amount": 3703
     }
-}
-~~~
-
-#### 회원가입 API
->POST
-http:{IP}:8080/accounts/save
-~~~
-Header
-Content-Type: application/json
-Authorization : "Bearer {jwttoken}"
-
-Request
-{
-	"username":"test002",
-	"password":"test002"
-}
-
-Response
-{
-    "code": 200,
-    "message": "정상 처리되었습니다.",
-    "result": {token 값 생성됨.}
-}
-~~~
-
-#### 로그인 API
->POST
-http:{IP}:8080/accounts/token
-~~~
-Header
-Content-Type: application/json
-Authorization : "Bearer {jwttoken}"
-
-Request
-{
-	"username":"test002",
-	"password":"test002"
-}
-
-Response
-{
-    "code": 200,
-    "message": "정상 처리되었습니다.",
-    "result": {token 값 생성됨.}
-}
-~~~
-
-#### 토큰 재발급 API
->GET
-http:{IP}:8080/accounts/token
-~~~
-Header
-Content-Type: application/json
-Authorization : "Bearer {jwttoken}"
-
-Request
-
-Response
-{
-    "code": 200,
-    "message": "정상 처리되었습니다.",
-    "result": {token 값 생성됨.}
 }
 ~~~
