@@ -8,8 +8,8 @@ import java.util.Optional;
 public interface InstituteRepository extends JpaRepository<Institute, Long> {
 
     // 코드로 주택 공급 기관 조회
-    Optional<Institute> findByCode(String code);
+    Institute findByCode(String code);
 
     // 이름으로 주택 공급 기관 조회
-    Optional<Institute> findByName(String institute_name);
+    Institute findByName(String institute_name);
 }

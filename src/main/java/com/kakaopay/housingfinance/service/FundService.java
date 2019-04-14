@@ -53,11 +53,11 @@ public class FundService {
 
         String bank = "";
 
-        Optional<Institute> optionalInstitute = instituteRepository.findByCode(institute_code);
+        Institute institute = instituteRepository.findByCode(institute_code);
 
         // null이라면. optionalInstitute.isPresent() null이 아닐 때 => 그것의 반대이니 null인경우
-        if(optionalInstitute.isPresent()){
-            bank = optionalInstitute.get().getName();
+        if(institute != null){
+            bank = institute.getName();
         }
 
         List<FundYearAvgMinMaxDto> fundYearAvgMinMaxDtoList = fundStatsRepository.findAllFundYearAvgMinMaxDtoList(institute_code);

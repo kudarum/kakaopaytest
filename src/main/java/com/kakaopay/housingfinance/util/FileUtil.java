@@ -2,7 +2,6 @@ package com.kakaopay.housingfinance.util;
 
 import com.kakaopay.housingfinance.common.response.ApiResponseBody;
 import com.kakaopay.housingfinance.common.response.ApiResponseMessage;
-import com.kakaopay.housingfinance.model.dto.FundYearAvgDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

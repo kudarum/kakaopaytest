@@ -1,7 +1,11 @@
 package com.kakaopay.housingfinance.config;
 
+import com.kakaopay.housingfinance.model.Account;
+import com.kakaopay.housingfinance.model.AccountRole;
 import com.kakaopay.housingfinance.model.Institute;
+import com.kakaopay.housingfinance.repository.AccountRepository;
 import com.kakaopay.housingfinance.repository.InstituteRepository;
+import com.kakaopay.housingfinance.service.AccountService;
 import com.kakaopay.housingfinance.util.CsvUtil;
 import com.kakaopay.housingfinance.util.NumberUtil;
 import com.kakaopay.housingfinance.util.PredictionUtil;
@@ -12,9 +16,10 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Configuration
 public class AppConfig {
@@ -42,6 +47,11 @@ public class AppConfig {
         return new PredictionUtil();
     }
 
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
     // 앱 시작 시 동작하며 기관의 초기데이터 생성.
     @Bean
     public ApplicationRunner applicationRunner(){
@@ -50,9 +60,14 @@ public class AppConfig {
             @Autowired
             MessageSource messageSource;
 
-
             @Autowired
             InstituteRepository instituteRepository;
+
+            @Autowired
+            AccountService accountService;
+
+            @Autowired
+            PasswordEncoder passwordEncoder;
 
             @Override
             public void run(ApplicationArguments args) throws Exception {
@@ -70,7 +85,21 @@ public class AppConfig {
                     code_count++;
                 }
 
+
                 instituteRepository.saveAll(instituteList);
+
+
+                List<AccountRole> roleList = new ArrayList<>();
+                roleList.add(AccountRole.ADMIN);
+                roleList.add(AccountRole.USER);
+
+                Account account = Account.builder()
+                        .username("admin")
+                        .password("admin")
+                        .roles(roleList)
+                        .build();
+
+                accountService.saveAccount(account);
 
             }
         };

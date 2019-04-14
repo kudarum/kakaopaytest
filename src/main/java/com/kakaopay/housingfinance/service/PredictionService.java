@@ -36,13 +36,13 @@ public class PredictionService {
     public PredictionDto getPredictionFundMonth(PredictionDto predictionFundDto) throws Exception {
 
         // 기관 코드 조회
-        Optional<Institute> optionalInstitute = instituteRepository.findByName(predictionFundDto.getBank());
+        Institute institute = instituteRepository.findByName(predictionFundDto.getBank());
 
-        if(!optionalInstitute.isPresent()){
+        if(institute == null){
             throw new NullPointerException(ApiResponseMessage.ERROR_PREDICTION_FAIL.getMessage());
         }
 
-        String institute_code = optionalInstitute.get().getCode();
+        String institute_code = institute.getCode();
         Integer analysis_year = predictionFundDto.getYear();
         Integer analysis_month = predictionFundDto.getMonth();
 

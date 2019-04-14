@@ -1,15 +1,22 @@
 package com.kakaopay.housingfinance.common.response;
 
 import lombok.Getter;
+import org.springframework.http.HttpStatus;
 
 @Getter
 public enum ApiResponseMessage {
     RESPONSE_SUCCESS("정상 처리되었습니다."),
     RESPONSE_FAIL("처리에 실패하였습니다."),
-
+    RESPONSE_ACCOUNT_CREATED("%s 계정이 생성되었습니다."),
+    RESPONSE_JWT_CREATED("토큰이 발급되었습니다."),
 
     RESPONSE_SUCCESS_FILE("주택금융 데이터 업로드가 정상적으로 처리되었습니다."),
 
+    ERROR_DUPLICATE_ACCOUNT("이미 가입된 회원입니다."),
+    ERROR_NOT_FOUND_TOKEN("요청 토큰이 없습니다."),
+    ERROR_UNAUTHORIZED("올바른 요청이 아닙니다."),
+    ERROR_LOGIN_FAIL("아이디와 비밀번호를 확인해주세요."),
+    ERROR_NOT_RESOLVE_TOKEN("올바른 형태의 토큰이 아닙니다."),
     ERROR_PARAM_NOT_FOUND("필수 파라미터가 누락되었습니다."),
     ERROR_FILE_NOT_FOUND("파일을 찾을 수 없습니다."),
     ERROR_FILE_MAX_SIZE("파일이 너무 큽니다."),
