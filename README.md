@@ -271,7 +271,7 @@ Request
 Response
 {
     "code": 200,
-    "message": "토큰이 발급되었습니다.",
+    "message": "정상 처리되었습니다.",
     "result": {token 값 생성됨.}
 }
 ~~~
