@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
@@ -106,7 +107,7 @@ public class AccountController {
     @GetMapping("/token")
     public ResponseEntity getRefreshToken(HttpServletRequest request) {
 
-        if (request.getHeader("Authorization") == null) {
+        if (StringUtils.isEmpty(request.getHeader("Authorization"))) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponseBody<>(HttpStatus.BAD_REQUEST,ApiResponseMessage.ERROR_PARAM_NOT_FOUND.getMessage()));
         }
 
