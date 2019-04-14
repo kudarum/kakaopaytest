@@ -277,7 +277,7 @@ Response
 ~~~
 
 #### 토큰 재발급 API
->POST
+>GET
 http:{IP}:8080/accounts/token
 ~~~
 Header
