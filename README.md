@@ -290,6 +290,6 @@ Response
 {
     "code": 200,
     "message": "정상 처리되었습니다.",
-    "result": {jwttoken}
+    "result": {token 값 생성됨.}
 }
 ~~~
