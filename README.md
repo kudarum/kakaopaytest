@@ -206,7 +206,7 @@ Response
 
 #### 특정 은행의 특정 달에 대해서 2018년도 해당 달에 금융지원 금액을 예측하는 API
 >GET
-http:{IP}:8080/funds/stats/yearavg/min-max
+http:{IP}:8080/predictions/fund/month
 ~~~
 Header
 Content-Type: application/json
@@ -229,5 +229,67 @@ Response
         "month": 2,
         "amount": 3703
     }
+}
+~~~
+
+#### 회원가입 API
+>POST
+http:{IP}:8080/accounts/save
+~~~
+Header
+Content-Type: application/json
+Authorization : "Bearer {jwttoken}"
+
+Request
+{
+	"username":"test002",
+	"password":"test002"
+}
+
+Response
+{
+    "code": 200,
+    "message": "정상 처리되었습니다.",
+    "result": {token 값 생성됨.}
+}
+~~~
+
+#### 로그인 API
+>POST
+http:{IP}:8080/accounts/token
+~~~
+Header
+Content-Type: application/json
+Authorization : "Bearer {jwttoken}"
+
+Request
+{
+	"username":"test002",
+	"password":"test002"
+}
+
+Response
+{
+    "code": 200,
+    "message": "토큰이 발급되었습니다.",
+    "result": {token 값 생성됨.}
+}
+~~~
+
+#### 토큰 재발급 API
+>POST
+http:{IP}:8080/accounts/token
+~~~
+Header
+Content-Type: application/json
+Authorization : "Bearer {jwttoken}"
+
+Request
+
+Response
+{
+    "code": 200,
+    "message": "정상 처리되었습니다.",
+    "result": {jwttoken}
 }
 ~~~
