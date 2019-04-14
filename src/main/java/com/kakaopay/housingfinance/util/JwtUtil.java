@@ -2,6 +2,7 @@ package com.kakaopay.housingfinance.util;
 
 
 import com.kakaopay.housingfinance.common.properties.JwtProperties;
+import com.kakaopay.housingfinance.common.response.ApiResponseMessage;
 import com.kakaopay.housingfinance.model.AccountRole;
 import com.kakaopay.housingfinance.service.AccountService;
 import io.jsonwebtoken.*;
@@ -105,10 +106,9 @@ public class JwtUtil {
             }
 
             return true;
-        } catch (Exception e ) {
+        } catch (JwtException | IllegalArgumentException e ) {
             //return false;
-            e.printStackTrace();
-            throw e;
+            throw new JwtException(ApiResponseMessage.ERROR_NOT_RESOLVE_TOKEN.getMessage());
         }
     }
 }

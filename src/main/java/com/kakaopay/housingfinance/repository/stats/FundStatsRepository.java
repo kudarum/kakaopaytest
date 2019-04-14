@@ -43,7 +43,7 @@ public class FundStatsRepository {
     public FundYearSumMaxDto findAllFundYearSumMax(){
         Query nativeQuery = entityManager.createNativeQuery(
                 "SELECT result.year" +
-                        "       , (SELECT ins.institute_code FROM Institute ins WHERE ins.institute_code = result.institute_code) as bank" +
+                        "       , (SELECT ins.institute_name FROM Institute ins WHERE ins.institute_code = result.institute_code) as bank" +
                         "   FROM (" +
                         "       SELECT TOP 1 sta.year" +
                         "           , sta.institute_code" +

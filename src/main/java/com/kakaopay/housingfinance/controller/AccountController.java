@@ -87,7 +87,7 @@ public class AccountController {
             String token = jwtUtil.createJwt(account.getUsername(),account.getRoles());
 
             return ResponseEntity.status(HttpStatus.OK)
-                    .body(new ApiResponseBody<>(HttpStatus.OK,ApiResponseMessage.RESPONSE_JWT_CREATED.getMessage(),token));
+                    .body(new ApiResponseBody<>(HttpStatus.OK,ApiResponseMessage.RESPONSE_SUCCESS.getMessage(),token));
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new ApiResponseBody<>(HttpStatus.BAD_REQUEST,ApiResponseMessage.ERROR_LOGIN_FAIL.getMessage()));

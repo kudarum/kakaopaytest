@@ -7,6 +7,7 @@ import io.jsonwebtoken.UnsupportedJwtException;
 import javassist.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -88,6 +89,15 @@ public class ApiException  {
     @ExceptionHandler(UnsupportedJwtException.class)
     @ResponseStatus(code = HttpStatus.UNAUTHORIZED)
     public ResponseEntity notUnauthorizedAccess(UnsupportedJwtException e)
+    {
+        e.printStackTrace();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ApiResponseBody(HttpStatus.BAD_REQUEST,ApiResponseMessage.ERROR_NOT_RESOLVE_TOKEN.getMessage()));
+    }
+
+    @ExceptionHandler(UsernameNotFoundException.class)
+    @ResponseStatus(code = HttpStatus.NOT_FOUND)
+    public ResponseEntity notUnauthorizedAccess(UsernameNotFoundException e)
     {
         e.printStackTrace();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
