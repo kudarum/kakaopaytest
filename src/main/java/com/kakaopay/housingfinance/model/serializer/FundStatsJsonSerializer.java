@@ -16,7 +16,7 @@ import java.util.List;
 public class FundStatsJsonSerializer extends JsonSerializer<FundStatsDto> {
 
     @Autowired
-    NumberUtil numberUtil;
+    private NumberUtil numberUtil;
 
     @Override
     public void serialize(FundStatsDto fundStatsDto, JsonGenerator gen, SerializerProvider serializers) throws IOException {

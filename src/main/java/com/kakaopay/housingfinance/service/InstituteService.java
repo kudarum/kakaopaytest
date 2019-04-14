@@ -12,7 +12,7 @@ import java.util.List;
 public class InstituteService {
 
     @Autowired
-    InstituteRepository instituteRepository;
+    private InstituteRepository instituteRepository;
 
     /**
      * 코트로 주택 공급기관 조회시 코드 오름차순 정렬

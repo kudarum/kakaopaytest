@@ -1,4 +1,4 @@
-package com.kakaopay.housingfinance.common.filter;
+package com.kakaopay.housingfinance.common.filter.entrypoint;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
-
 
     @Override
     public void commence(HttpServletRequest req, HttpServletResponse res, AuthenticationException e) throws IOException, ServletException {

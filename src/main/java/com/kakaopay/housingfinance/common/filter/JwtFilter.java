@@ -6,6 +6,7 @@ import com.kakaopay.housingfinance.common.response.ApiResponseBody;
 import com.kakaopay.housingfinance.common.response.ApiResponseMessage;
 import com.kakaopay.housingfinance.util.JwtUtil;
 import io.jsonwebtoken.JwtException;
+import javassist.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
@@ -44,6 +45,8 @@ public class JwtFilter extends GenericFilterBean {
                 if (auth != null) {
                     SecurityContextHolder.getContext().setAuthentication(auth);
                 }
+            } else {
+                throw new NotFoundException(ApiResponseMessage.ERROR_NOT_FOUND_TOKEN.getMessage());
             }
         } catch (UsernameNotFoundException e) {
             // 유저를 찾지 못한경우.
@@ -52,6 +55,9 @@ public class JwtFilter extends GenericFilterBean {
         } catch (JwtException e) {
             // 토큰 변환 오류가 잘생한 경우
             printErrorWriter(response,HttpStatus.BAD_REQUEST,e.getMessage());
+            return;
+        } catch (NotFoundException e) {
+            printErrorWriter(response,HttpStatus.BAD_REQUEST,ApiResponseMessage.ERROR_NOT_FOUND_TOKEN.getMessage());
             return;
         } catch (Exception e) {
             printErrorWriter(response,HttpStatus.INTERNAL_SERVER_ERROR,ApiResponseMessage.ERROR_RUN_TIME_EXCEPTION.getMessage());

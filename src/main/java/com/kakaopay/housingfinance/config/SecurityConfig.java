@@ -1,6 +1,6 @@
 package com.kakaopay.housingfinance.config;
 
-import com.kakaopay.housingfinance.common.filter.CustomAuthenticationEntryPoint;
+import com.kakaopay.housingfinance.common.filter.entrypoint.CustomAuthenticationEntryPoint;
 import com.kakaopay.housingfinance.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -15,7 +15,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    JwtUtil jwtUtil;
+    private JwtUtil jwtUtil;
 
 
     private static final String ROOT_ENTRY_POINT = "/**";

@@ -2,14 +2,13 @@ package com.kakaopay.housingfinance.model.dto;
 
 import lombok.*;
 
-//@Data
-//@Getter @Setter
-//@Builder @NoArgsConstructor @AllArgsConstructor
-@Value
+@Data
+@Getter @Setter
+@Builder @NoArgsConstructor @AllArgsConstructor
 public class FundYearAvgMinMaxDto {
 
-    private final Integer year;
+    private Integer year;
 
-    private final Long amount;
+    private Long amount;
 
 }

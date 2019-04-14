@@ -7,29 +7,27 @@ import com.kakaopay.housingfinance.repository.FundRepository;
 import com.kakaopay.housingfinance.repository.InstituteRepository;
 import com.kakaopay.housingfinance.repository.PredictionRepository;
 import com.kakaopay.housingfinance.util.PredictionUtil;
-import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @Service
 public class PredictionService {
 
     @Autowired
-    PredictionRepository predictionRepository;
+    private PredictionRepository predictionRepository;
 
     @Autowired
-    InstituteRepository instituteRepository;
+    private InstituteRepository instituteRepository;
 
     @Autowired
-    FundRepository fundRepository;
+    private FundRepository fundRepository;
 
     @Autowired
-    PredictionUtil predictionUtil;
+    private PredictionUtil predictionUtil;
 
     // 특정 은행의 특정 달에 대해서 2018년도 해당 달에 금융지원 금액을 예측
     @Transactional

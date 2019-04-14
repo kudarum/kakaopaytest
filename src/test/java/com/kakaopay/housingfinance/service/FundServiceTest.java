@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class FundServiceTest extends BaseTest {
 
     @Autowired
-    FundService fundService;
+    private FundService fundService;
 
     @Before
     public void setUp() throws Exception {

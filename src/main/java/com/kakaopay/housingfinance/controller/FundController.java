@@ -22,7 +22,7 @@ import java.util.Map;
 public class FundController {
 
     @Autowired
-    FundService fundService;
+    private FundService fundService;
 
     /**
      * 년도별 각 금융기관의 지원금액 합계

@@ -26,7 +26,7 @@ import java.util.List;
 public class FileUtil {
 
     @Autowired
-    CsvUtil csvUtil;
+    private CsvUtil csvUtil;
 
     /**
      * 기관 지원금 csv파일 읽어 데이터 DB에 저장.

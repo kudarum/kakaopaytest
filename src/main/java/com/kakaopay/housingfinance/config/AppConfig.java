@@ -58,16 +58,16 @@ public class AppConfig {
         return new ApplicationRunner() {
 
             @Autowired
-            MessageSource messageSource;
+            private MessageSource messageSource;
 
             @Autowired
-            InstituteRepository instituteRepository;
+            private InstituteRepository instituteRepository;
 
             @Autowired
-            AccountService accountService;
+            private AccountService accountService;
 
             @Autowired
-            PasswordEncoder passwordEncoder;
+            private PasswordEncoder passwordEncoder;
 
             @Override
             public void run(ApplicationArguments args) throws Exception {

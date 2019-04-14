@@ -25,10 +25,10 @@ import java.util.List;
 public class JwtUtil {
 
     @Autowired
-    JwtProperties jwtProperties;
+    private JwtProperties jwtProperties;
 
     @Autowired
-    AccountService accountService;
+    private AccountService accountService;
 
     private String secretKey;
 

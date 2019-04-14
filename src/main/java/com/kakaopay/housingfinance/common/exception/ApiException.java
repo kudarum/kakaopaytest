@@ -36,8 +36,6 @@ public class ApiException  {
                 .body(new ApiResponseBody(HttpStatus.BAD_REQUEST,e.getMessage()));
     }
 
-
-
     @ExceptionHandler(value = {NotFoundException.class, NoHandlerFoundException.class})
     @ResponseStatus(code = HttpStatus.NOT_FOUND)
     public ResponseEntity notFoundUrl(NotFoundException e) {
@@ -60,14 +58,6 @@ public class ApiException  {
         e.printStackTrace();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ApiResponseBody(HttpStatus.BAD_REQUEST,ApiResponseMessage.ERROR_FILE_MAX_SIZE.getMessage()));
-    }
-
-    @ExceptionHandler(Exception.class)
-    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    public ResponseEntity exception(Exception e) {
-        e.printStackTrace();
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(new ApiResponseBody(HttpStatus.BAD_REQUEST,e.getMessage()));
     }
 
     @ExceptionHandler(ResponseStatusException.class)
@@ -101,7 +91,7 @@ public class ApiException  {
     {
         e.printStackTrace();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(new ApiResponseBody(HttpStatus.BAD_REQUEST,ApiResponseMessage.ERROR_NOT_RESOLVE_TOKEN.getMessage()));
+                .body(new ApiResponseBody(HttpStatus.BAD_REQUEST,ApiResponseMessage.ERROR_UNAUTHORIZED.getMessage()));
     }
 
     @ExceptionHandler(RuntimeException.class)
@@ -111,4 +101,13 @@ public class ApiException  {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(new ApiResponseBody(HttpStatus.INTERNAL_SERVER_ERROR,ApiResponseMessage.ERROR_RUN_TIME_EXCEPTION.getMessage()));
     }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    public ResponseEntity exception(Exception e) {
+        e.printStackTrace();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ApiResponseBody(HttpStatus.BAD_REQUEST,e.getMessage()));
+    }
+
 }

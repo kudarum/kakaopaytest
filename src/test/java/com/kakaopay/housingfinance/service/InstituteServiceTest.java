@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class InstituteServiceTest extends BaseTest {
 
     @Autowired
-    InstituteService instituteService;
+    private InstituteService instituteService;
 
 
     @Test

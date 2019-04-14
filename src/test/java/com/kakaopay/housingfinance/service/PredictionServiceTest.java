@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PredictionServiceTest extends BaseTest {
 
     @Autowired
-    PredictionService predictionService;
+    private PredictionService predictionService;
 
     @Before
     public void setUp() throws Exception{

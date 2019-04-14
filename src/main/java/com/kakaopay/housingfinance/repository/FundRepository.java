@@ -3,7 +3,6 @@ package com.kakaopay.housingfinance.repository;
 import com.kakaopay.housingfinance.model.Fund;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Map;

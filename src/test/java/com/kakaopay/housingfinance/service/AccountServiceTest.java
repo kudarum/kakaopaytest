@@ -19,16 +19,16 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 public class AccountServiceTest extends BaseTest {
 
     @Autowired
-    AccountService accountService;
+    private AccountService accountService;
 
     @Autowired
-    AccountRepository accountRepository;
+    private AccountRepository accountRepository;
 
     @Autowired
-    JwtUtil jwtUtil;
+    private JwtUtil jwtUtil;
 
     @Autowired
-    ModelMapper modelMapper;
+    private ModelMapper modelMapper;
 
     private String token;
 

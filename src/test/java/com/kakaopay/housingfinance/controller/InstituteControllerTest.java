@@ -28,16 +28,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class InstituteControllerTest extends BaseTest {
 
     @Autowired
-    InstituteService instituteService;
+    private InstituteService instituteService;
 
     @Autowired
-    InstituteRepository instituteRepository;
+    private InstituteRepository instituteRepository;
 
     @Autowired
-    AccountRepository accountRepository;
+    private AccountRepository accountRepository;
 
     @Autowired
-    JwtUtil jwtUtil;
+    private JwtUtil jwtUtil;
 
     private String token;
 
@@ -87,9 +87,9 @@ public class InstituteControllerTest extends BaseTest {
                 .contentType(MediaType.APPLICATION_JSON_UTF8) // 요청에 JSON 담아 보낼께
                 .accept(MediaType.APPLICATION_JSON_UTF8)) // 나느 JSON 형태로 응답 받기를 원한다. 요구함.
                 .andDo(print())
-                .andExpect(status().isForbidden())
+                .andExpect(status().isBadRequest())
                 .andExpect(header().string(HttpHeaders.CONTENT_TYPE,MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("code").value(HttpStatus.FORBIDDEN.value()))
+                .andExpect(jsonPath("code").value(HttpStatus.BAD_REQUEST.value()))
                 .andExpect(jsonPath("message").exists());
     }
 

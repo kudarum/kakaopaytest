@@ -7,7 +7,6 @@ import com.kakaopay.housingfinance.repository.FundRepository;
 import com.kakaopay.housingfinance.repository.InstituteRepository;
 import com.opencsv.CSVReader;
 import javassist.NotFoundException;
-import org.hibernate.JDBCException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,13 +24,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class CsvUtil {
 
     @Autowired
-    InstituteRepository instituteRepository;
+    private InstituteRepository instituteRepository;
 
     @Autowired
-    FundRepository fundRepository;
+    private FundRepository fundRepository;
 
     @Autowired
-    NumberUtil numberUtil;
+    private NumberUtil numberUtil;
 
     /**
      * 기관 지원금 csv파일 읽어 데이터 DB에 저장.

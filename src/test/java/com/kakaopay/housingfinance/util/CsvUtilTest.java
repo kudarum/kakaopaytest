@@ -30,10 +30,10 @@ public class CsvUtilTest {
     private String test_not_match_file_fath;
 
     @Autowired
-    CsvUtil csvUtil;
+    private CsvUtil csvUtil;
 
     @Autowired
-    FundRepository fundRepository;
+    private FundRepository fundRepository;
 
     @Before
     public void setUp() {

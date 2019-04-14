@@ -21,7 +21,7 @@ import javax.validation.Valid;
 public class PredictionController {
 
     @Autowired
-    PredictionService predictionService;
+    private PredictionService predictionService;
 
     /**
      * 특정 은행의 특정 달에 대해서 검색 년도 해당 달에 금융지원 금액을 예측

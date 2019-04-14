@@ -30,10 +30,10 @@ public class FileUtilTest extends BaseTest {
     MockMvc mockMvc;
 
     @Autowired
-    AccountRepository accountRepository;
+    private AccountRepository accountRepository;
 
     @Autowired
-    JwtUtil jwtUtil;
+    private JwtUtil jwtUtil;
 
     private String token;
 
@@ -83,7 +83,7 @@ public class FileUtilTest extends BaseTest {
     }
 
     @Test
-    @TestDescription("토큰 없이 파일 업로드 정상 처리 시 403 오류 발생")
+    @TestDescription("토큰 없이 파일 업로드 처리 시 400 오류 발생")
     public void test_FileUtil_Success_NoToken() throws Exception{
 
         File testFile = new File(testFileFath);
@@ -95,9 +95,9 @@ public class FileUtilTest extends BaseTest {
                 .contentType(MediaType.MULTIPART_FORM_DATA) // 요청에 JSON 담아 보낼께
                 .accept(MediaType.APPLICATION_JSON_UTF8))
                 .andDo(print())
-                .andExpect(status().isForbidden()) // http status 200
+                .andExpect(status().isBadRequest()) // http status 200
                 .andExpect(header().string(HttpHeaders.CONTENT_TYPE,MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("code").value(HttpStatus.FORBIDDEN.value()))
+                .andExpect(jsonPath("code").value(HttpStatus.BAD_REQUEST.value()))
                 .andExpect(jsonPath("message").exists());
     }
 

@@ -19,10 +19,10 @@ import java.util.List;
 public class InstituteController {
 
     @Autowired
-    InstituteService instituteService;
+    private InstituteService instituteService;
 
     @Autowired
-    NumberUtil numberUtil;
+    private NumberUtil numberUtil;
 
     /**
      * 주택금융 공급 금융기관(은행) 목록 조회.

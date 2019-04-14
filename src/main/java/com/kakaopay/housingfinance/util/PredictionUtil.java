@@ -1,18 +1,13 @@
 package com.kakaopay.housingfinance.util;
 
 
-import com.kakaopay.housingfinance.common.response.ApiResponseMessage;
 import com.workday.insights.timeseries.arima.Arima;
 import com.workday.insights.timeseries.arima.struct.ArimaParams;
 import com.workday.insights.timeseries.arima.struct.ForecastResult;
-import lombok.extern.slf4j.Slf4j;
-
-import java.util.List;
 
 /**
  * 시계열 예측 Util
  */
-@Slf4j
 public class PredictionUtil {
 
     public Double analysisArima(double[] arimaDataArray, Integer analysis_year, Integer analysis_month, Integer start_year, Integer start_month, Integer end_year, Integer end_month) throws Exception {

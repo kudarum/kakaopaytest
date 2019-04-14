@@ -12,25 +12,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class FundService {
 
     @Autowired
-    InstituteRepository instituteRepository;
+    private InstituteRepository instituteRepository;
 
     @Autowired
-    FundRepository fundRepository;
+    private FundRepository fundRepository;
 
     @Autowired
-    FundStatsRepository fundStatsRepository;
+    private FundStatsRepository fundStatsRepository;
 
     @Autowired
-    ModelMapper modelMapper;
+    private ModelMapper modelMapper;
 
     @Autowired
-    PredictionUtil predictionUtil;
+    private PredictionUtil predictionUtil;
 
     // 년도별 각 금융기관의 지원금액 합계
     public FundStatsDto getFundStatsYearSum() {
