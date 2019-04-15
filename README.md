@@ -50,7 +50,7 @@ java -jar ${ProjectPath}/target/housingfinance-0.0.1-SNAPSHOT.jar
 3. 계정을 생성하여 token을 발급 받기
 <img src="https://github.com/kudarum/kakaopaytest/blob/master/src/main/resources/1%EB%B2%88%20%EA%B3%84%EC%A0%95%EC%83%9D%EC%84%B1.png?raw=true" width="500" height="363">
 
-4. 발급받은 토큰을 활용한 파일업로드 절차 part1 : ULR과 토큰을 입력 후 body 텝으로 이동.
+4. 발급받은 토큰을 활용한 파일업로드 절차 part1 : ULR과 Bearer Token 선택 후 토큰을 입력 후 body 텝으로 이동.
 <img src="https://github.com/kudarum/kakaopaytest/blob/master/src/main/resources/2%EB%B2%88%20%ED%8C%8C%EC%9D%BC%20%EC%97%85%EB%A1%9C%EB%93%9C.png?raw=true" width="500" height="363">
 
 5. 발급받은 토큰을 활용한 파일업로드 절차 part2 : 업로드할 파일을 선택
@@ -66,7 +66,6 @@ http:{IP}:8080/accounts/save
 ~~~
 Header
 Content-Type: application/json
-Authorization : "Bearer {jwttoken}"
 
 Request
 {
@@ -88,7 +87,6 @@ http:{IP}:8080/accounts/token
 ~~~
 Header
 Content-Type: application/json
-Authorization : "Bearer {jwttoken}"
 
 Request
 {
@@ -130,7 +128,7 @@ Content-Type: multipart/form-data
 
 Request
 {
-	"file" : file
+	"file" : file 첨부
 }
 ~~~
 #### 주택금융 공급 금융기관(은행) 목록을 출력하는 API
