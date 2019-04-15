@@ -44,6 +44,21 @@ java -jar ${ProjectPath}/target/housingfinance-0.0.1-SNAPSHOT.jar
 * 예외처리
   * @RestControllerAdvice 활용하여 요청에 대한 오류를 자동으로 핸들링
 
+### 테스트 절차
+1. POSTMAN을 다운받아 설치(Google에 POSTMAN 검색)
+2. Build와 Web Application Run절차를 수행하여 서버를 시작.
+3. 계정을 생성하여 token을 발급 받기
+<img src="https://github.com/kudarum/kakaopaytest/blob/master/src/main/resources/1%EB%B2%88%20%EA%B3%84%EC%A0%95%EC%83%9D%EC%84%B1.png?raw=true" width="500" height="363">
+
+4. 발급받은 토큰을 활용한 파일업로드 절차 part1 : ULR과 토큰을 입력 후 body 텝으로 이동.
+<img src="https://github.com/kudarum/kakaopaytest/blob/master/src/main/resources/2%EB%B2%88%20%ED%8C%8C%EC%9D%BC%20%EC%97%85%EB%A1%9C%EB%93%9C.png?raw=true" width="500" height="363">
+
+5. 발급받은 토큰을 활용한 파일업로드 절차 part2 : 업로드할 파일을 선택
+<img src="https://github.com/kudarum/kakaopaytest/blob/master/src/main/resources/3%EB%B2%88%20%ED%8C%8C%EC%9D%BC%20%EC%97%85%EB%A1%9C%EB%93%9C%20%EC%99%84%EB%A3%8C.png?raw=true" width="500" height="363">
+
+6. API 테스트 : 1번에서 발급받은 token으로 테스트
+<img src="https://github.com/kudarum/kakaopaytest/blob/master/src/main/resources/4%EB%B2%88%20%ED%86%A0%ED%81%B0%EC%9D%84%20%ED%99%9C%EC%9A%A9%ED%95%9C%20%EC%A1%B0%ED%9A%8C.png?raw=true" width="500" height="363">
+
 ### API 명세서
 #### 회원가입 API
 >POST
